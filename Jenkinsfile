@@ -30,7 +30,6 @@ pipeline {
             steps {
                 script {
                     echo "deploying"
-                    sh 'node --version'
                     //gv.deployApp()
                 }
             }
