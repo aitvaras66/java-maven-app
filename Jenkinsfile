@@ -30,10 +30,17 @@ pipeline {
             steps {
                 script {
                     echo "deploying"
-                    sh 'npm -v'
                     //gv.deployApp()
                 }
             }
         }
     }   
+    post{
+        always {
+            // executes always
+        }
+        success {
+            // or failure depends what you want to use
+        }
+    }
 }
