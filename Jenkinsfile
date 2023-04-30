@@ -2,23 +2,23 @@ def gv
 // CODE_CHANGES = getGitChanges()
 pipeline {
     agent any
-    tools {
-        maven 'maven-3.9'
-    }
+//     tools {
+//         maven 'maven-3.9'
+//     }
     parameters{
         // string(name: 'VERSION', defaultValue: '', description: 'version to deplopy')
         choice(name: 'VERSION', choices: ['1.0', '1.1', '1.2'], description: '')
         booleanParam(name: 'executeTests', defaultValue: true, description: '')
     }
-    environment {
-        NEW_VERSION = '1.3.0'
-        SERVER_CREDENTIALS = credentials('server-cred')
-    }
+//     environment {
+//         NEW_VERSION = '1.3.0'
+//         SERVER_CREDENTIALS = credentials('server-cred')
+//     }
     stages {
         stage("init") {
             steps {
                 script {
-                    gv = load "script.groovy"
+//                     gv = load "script.groovy"
                 }
             }
         }
@@ -66,12 +66,12 @@ pipeline {
             }
         }
     }   
-    post{
-        always {
-            // executes always
-        }
-        success {
-            // or failure depends what you want to use
-        }
-    }
+//     post{
+//         always {
+//             // executes always
+//         }
+//         success {
+//             // or failure depends what you want to use
+//         }
+//     }
 }
