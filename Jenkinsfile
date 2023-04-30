@@ -2,6 +2,9 @@ def gv
 
 pipeline {
     agent any
+    parameters{
+        choice(name: 'BRANCH_NAME', choices: ['jenkins-job', 'main'], description: '')
+    }
     stages {
         stage("init") {
             steps {
