@@ -54,7 +54,7 @@ pipeline {
             steps {
                 script {
                     echo "deploying"
-                    echo "deploying with ${SERVER_CREDENTIALS}"
+//                     echo "deploying with ${SERVER_CREDENTIALS}"
 //                     sh "${SERVER_CREDENTIALS}"
 //                     withCredentials([
 //                         usernamePassword(credentials: 'server-cred', usernameVariable: USER, passwordVariable: PWD)
