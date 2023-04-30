@@ -24,7 +24,7 @@ pipeline {
             steps {
                 script {
                     echo "building image"
-                    buildImage()
+                    buildImage 'image name and tag'
                 }
             }
         }
