@@ -36,7 +36,7 @@ pipeline {
             steps {
                 script {
                     echo "testing the app"
-                    echo "building version ${NEW_VERSION}"
+//                     echo "building version ${NEW_VERSION}"
                     echo "deploying version ${params.VERSION}"
                     //gv.buildJar()
                 }
