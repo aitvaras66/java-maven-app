@@ -28,12 +28,12 @@ pipeline {
             //         env.BRANCH_NAME == 'dev' || BRANCH_NAME == 'main' && CODE_CHANGES == true
             //     }
             // }
-            steps {
                 when{
                     expression{
                         params.executeTests == true
                     }
                 }
+            steps {
                 script {
                     echo "testing the app"
                     echo "building version ${NEW_VERSION}"
