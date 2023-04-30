@@ -15,13 +15,13 @@ pipeline {
 //         SERVER_CREDENTIALS = credentials('server-cred')
 //     }
     stages {
-        stage("init") {
-            steps {
-                script {
-//                     gv = load "script.groovy"
-                }
-            }
-        }
+//         stage("init") {
+//             steps {
+//                 script {
+// //                     gv = load "script.groovy"
+//                 }
+//             }
+//         }
         stage("test") {
             // when {
             //     expression {
