@@ -1,3 +1,5 @@
+
+@Library('jenkins-shared-library')
 def gv
 
 pipeline {
@@ -14,7 +16,7 @@ pipeline {
             steps {
                 script {
                     echo "building jar"
-                    //gv.buildJar()
+                    buildJar()
                 }
             }
         }
@@ -22,24 +24,14 @@ pipeline {
             steps {
                 script {
                     echo "building image"
-                    //gv.buildImage()
+                    buildImage()
                 }
             }
         }
         stage("deploy") {
-            // input{
-            //     message "Select the env to deploy to"
-            //     ok "Done"
-            //     parameters{
-            //         choice(name: 'ONE', choices: ['dev', 'staging', 'prod'], description: '')
-            //         choice(name: 'TWO', choices: ['dev', 'staging', 'prod'], description: '')
-            //     }
-            // }
             steps {
                 script {
                     echo "deploying"
-                    // echo "Deploying to ${ONE}"
-                    // echo "Deploying to ${TWO}"
                     gv.deployApp()
                 }
             }
