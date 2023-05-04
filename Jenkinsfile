@@ -44,7 +44,7 @@ pipeline {
                     sshagent(['ec2-server-key']) {
                         sh "ssh -o StrictHostKeyChecking=no ec2-user@13.53.235.77 ${dockerCmd}"
                     }
-                    gv.deployApp()
+                    // gv.deployApp()
                 }
             }
         }
