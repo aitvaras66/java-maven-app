@@ -1,52 +1,56 @@
-def gv
+#!/usr/bin/env groovy
+
+library identifier: 'jenkins-shared-library@main', retriever: modernSCM(
+    [$class: 'GitSCMSource',
+     remote: 'https://github.com/aitvaras66/jenkins-shared-library.git',
+     credentialsId: 'github-creds	'
+    ]
+)
 
 pipeline {
     agent any
+    tools {
+        maven 'Maven'
+    }
+    environment {
+        IMAGE_NAME = 'aitvaras/demo-app:jma-1.0'
+    }
     stages {
-        // stage("init") {
-        //     steps {
-        //         script {
-        //             gv = load "script.groovy"
-        //         }
-        //     }
-        // }
-        stage("build jar") {
+        stage('build app') {
+            steps {
+               script {
+                  echo 'building application jar...'
+                  buildJar()
+               }
+            }
+        }
+        stage('build image') {
             steps {
                 script {
-                    echo "building jar"
-                    //gv.buildJar()
+                   echo 'building docker image...'
+                   buildImage(env.IMAGE_NAME)
+                   dockerLogin()
+                   dockerPush(env.IMAGE_NAME)
                 }
             }
         }
-        stage("build image") {
+        stage('deploy') {
             steps {
                 script {
-                    echo "building image"
-                    //gv.buildImage()
+                   echo 'deploying docker image to EC2...'
+
+                //    def shellCmd = "bash ./server-cmds.sh ${IMAGE_NAME}"
+                    def dockerComposeCmd = "docker-compose -f docker-compose.yaml up --detach"
+                    def ec2Instance = "ec2-user@13.53.235.77"
+
+                   sshagent(['ec2-server-key']) {
+                    //    sh "scp -o StrictHostKeyChecking=no server-cmds.sh ${ec2Instance}:/home/ec2-user"
+                       sh "scp docker-compose.yaml ${ec2Instance}:/home/ec2-user"
+                       sh "ssh -o StrictHostKeyChecking=no ${ec2Instance} ${dockerComposeCmd}"
+                   }
                 }
             }
         }
-        stage("deploy") {
-            // input{
-            //     message "Select the env to deploy to"
-            //     ok "Done"
-            //     parameters{
-            //         choice(name: 'ONE', choices: ['dev', 'staging', 'prod'], description: '')
-            //         choice(name: 'TWO', choices: ['dev', 'staging', 'prod'], description: '')
-            //     }
-            // }
-            steps {
-                script {
-                    echo "deploying"
-                    // echo "Deploying to ${ONE}"
-                    // echo "Deploying to ${TWO}"
-                    def dockerCmd = 'docker run -p 3080:3080 -d aitvaras/demo-app:1.0'
-                    sshagent(['ec2-server-key']) {
-                        sh "ssh -o StrictHostKeyChecking=no ec2-user@13.53.235.77 ${dockerCmd}"
-                    }
-                    // gv.deployApp()
-                }
-            }
-        }
-    }   
+    }
 }
+
