@@ -24,16 +24,16 @@ pipeline {
                }
             }
         }
-        stage('build image') {
-            steps {
-                script {
-                   echo 'building docker image...'
-                   buildImage(env.IMAGE_NAME)
-                   dockerLogin()
-                   dockerPush(env.IMAGE_NAME)
-                }
-            }
-        }
+//        stage('build image') {
+//            steps {
+//                script {
+//                   echo 'building docker image...'
+//                   buildImage(env.IMAGE_NAME)
+//                   dockerLogin()
+//                   dockerPush(env.IMAGE_NAME)
+//                }
+//            }
+//        }
         stage('deploy') {
             steps {
                 script {
