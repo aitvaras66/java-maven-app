@@ -40,6 +40,10 @@ pipeline {
                     echo "deploying"
                     // echo "Deploying to ${ONE}"
                     // echo "Deploying to ${TWO}"
+                    def dockerCmd = 'docker run -p 3080:3080 -d aitvaras/demo-app:1.0'
+                    sshagent(['ec2-server-key']) {
+                        sh "ssh -o StrictHostKeyChecking=no ec2-user@13.53.235.77 ${dockerCmd}"
+                    }
                     gv.deployApp()
                 }
             }
